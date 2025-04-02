@@ -45,12 +45,20 @@ const updatedPet = {
   name: 'Fluffy', 
   status: 'available' };
 
+const nonExistentPet = { 
+  ...petData,
+  id: 99999999,
+  name: 'Fluffy', 
+  status: 'available' };
+
 // petData with Missing required fields
 const invalidPetData = {
   name: 'Fluffy',
 }
 
 const fakePetId = 99999999; // A pet ID that should not exist
+
+const validOrderId = 10;
 
 
 module.exports = {
@@ -60,5 +68,7 @@ module.exports = {
   orderData,
   updatedPet,
   invalidPetData,
-  fakePetId
+  fakePetId,
+  nonExistentPet,
+  validOrderId
 };

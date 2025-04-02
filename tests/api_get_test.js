@@ -37,3 +37,25 @@ describe('@getdescribe GET Request for non-existent pet', () => {
     expect(response.body).to.have.property('message'), "Pet not found";
   });
 });
+
+describe('@getdescribe GET pets by status', () => {
+  it(`@getit ${cases.scenario.getOK.desc}`, async () => {
+    const response = await api.getByStatus('available');
+    
+    expect(response.status).to.equal(cases.scenario.getOK.response);
+    expect(response.body).to.be.an('array');
+    expect(response.body.length).to.be.greaterThan(0);
+    response.body.forEach((pet) => {
+      expect(pet).to.have.property('status', 'available');
+    });
+  });
+});
+
+// describe('@getdescribe GET pets by invalid status', () => {
+//   it(`@getit ${cases.scenario.getInvalidStatus.desc}`, async () => {
+//     const response = await api.getByStatus("invalidStatus");
+
+//     expect(response.status).to.equal(cases.scenario.getInvalidStatus.response);
+//   });
+// });
+

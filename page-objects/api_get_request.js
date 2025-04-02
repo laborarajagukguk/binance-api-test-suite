@@ -9,6 +9,12 @@ function getAPI(petId) {
   return api.get(`${Path}/${petId}`);
 }
 
+function getByStatus(status) {
+  return api.get(`${Path}/findByStatus?status=${status}`);
+}
+
+
 module.exports = {
   getAPI,
+  getByStatus,
 };

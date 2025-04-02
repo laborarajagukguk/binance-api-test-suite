@@ -19,3 +19,13 @@ describe('@putdescribe PUT request /pet', () => {
     expect(response.body).to.have.property('status', global.updatedPet.status);
   });
 });
+
+// describe('@putdescribe PUT update a non-existent pet', () => {
+//   it(`@putit ${cases.scenario.updateNonExistentPet.desc}`, async () => {
+    
+//     const response = await api.putAPI(global.nonExistentPet);
+
+//     expect(response.status).to.equal(cases.scenario.updateNonExistentPet.response);
+//     expect(response.body).to.have.property('message'); // API should return an error message
+//   });
+// });

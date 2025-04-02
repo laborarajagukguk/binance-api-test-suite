@@ -26,6 +26,15 @@ describe('@postdescribe POST request /pet', () => {
   });
 });
 
+// describe('@postdescribe POST pet with missing required fields', () => {
+//   it(`@postit ${cases.scenario.badRequest.desc}`, async () => {
+//     const response = await api.postAPI({}); // Sending an empty body
+
+//     expect(response.status).to.equal(cases.scenario.badRequest.response);
+//     expect(response.body).to.have.property('message'); // API should return an error message
+//   });
+// });
+
 //still success to add petData with no mandatory field
 // describe('@postdescribe POST request /pet', () => {
 //   it(`@postit ${cases.scenario.badRequest.desc}`, async () => {

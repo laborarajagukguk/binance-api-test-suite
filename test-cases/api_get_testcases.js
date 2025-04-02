@@ -8,8 +8,14 @@ const scenario = ({
 
   notFound: {
     desc: 'GET non-existent pet should return 404',
-    response: global.response.notFound, // Expected 404 response
+    response: global.response.notFound,
   },
+
+  getInvalidStatus: {
+    desc: 'GET pets by invalid status',
+    response: global.response.badRequest,
+  },
+
 });
 
 module.exports = {

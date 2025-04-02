@@ -4,6 +4,8 @@
 // Store created petId for all tests
 let createdPetId = null;
 
+let createdOrderId = null;
+
 let addActivityLog = ({
   source: '',
   name: 'mochachaitest name',
@@ -16,4 +18,5 @@ let addActivityLog = ({
 module.exports = {
   createdPetId,
   addActivityLog,
+  createdOrderId,
 };
