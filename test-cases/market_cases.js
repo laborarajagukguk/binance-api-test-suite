@@ -1,12 +1,12 @@
 const global = require('../helper/global.js');
 
 const scenario = {
-  orderOK: {
-    desc: 'POST pet order should return 200 with correct details',
+  fetchOrderBook: {
+    desc: 'Fetch Order Book - Valid Symbol',
     response: global.response.ok,
-  },
+  }
 };
 
 module.exports = {
-  scenario,
+  scenario
 };
