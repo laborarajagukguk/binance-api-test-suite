@@ -24,6 +24,12 @@ async function fetchAccountBalance() {
   return api.get(`/api/v3/account?${signed}`).set(headers);
 }
 
+async function fetchAccountBalanceUnauthorized() {
+  const signed = signedQuery('');
+  return api.get(`/api/v3/account?${signed}`); // no headers
+}
+
 module.exports = {
   fetchAccountBalance,
+  fetchAccountBalanceUnauthorized,
 };

@@ -12,4 +12,12 @@ describe('Account API Tests', () => {
     expect(response.body).to.have.property('balances');
     expect(response.body.balances).to.be.an('array');
   });
+
+  it('Unauthorized account balance request returns 401', async () => {
+    const response = await api.fetchAccountBalanceUnauthorized();
+   
+    expect(response.status).to.equal(401);
+    expect(response.body).to.have.property('code');
+    expect(response.body).to.have.property('msg', 'API-key format invalid.');
+  });
 });
