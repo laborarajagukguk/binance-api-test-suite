@@ -1,66 +1,31 @@
-const supertest = require('supertest');
-const crypto = require('crypto');
-require('dotenv').config();
+const { requestWithSignature } = require('../helper/request');
 
-const api = supertest(process.env.BASE_URL_API);
-
-function getSignature(queryString) {
-  return crypto.createHmac('sha256', process.env.API_SECRET)
-    .update(queryString)
-    .digest('hex');
+function placeLimitOrder(symbol, quantity, price) {
+  const params = `symbol=${symbol}&side=BUY&type=LIMIT&timeInForce=GTC&quantity=${quantity}&price=${price}`;
+  return requestWithSignature('post', '/api/v3/order', params);
 }
 
-function signedQuery(queryParams = '') {
-  const timestamp = Date.now();
-  const fullQuery = `${queryParams}&timestamp=${timestamp}`;
-  const signature = getSignature(fullQuery);
-  return `${fullQuery}&signature=${signature}`;
+function fetchOpenOrders(symbol) {
+  return requestWithSignature('get', '/api/v3/openOrders', `symbol=${symbol}`);
 }
 
-const headers = { 'X-MBX-APIKEY': process.env.API_KEY };
-const invalidHeaders = { 'X-MBX-APIKEY': 'INVALID_API_KEY' };
-
-async function placeLimitOrder(symbol, quantity, price) {
-  const queryParams = `symbol=${symbol}&side=BUY&type=LIMIT&timeInForce=GTC&quantity=${quantity}&price=${price}`;
-  const signed = signedQuery(queryParams);
-  return api.post(`/api/v3/order?${signed}`).set(headers);
+function fetchOpenOrdersAll() {
+  return requestWithSignature('get', '/api/v3/openOrders');
 }
 
-async function fetchOpenOrders(symbol) {
-  const queryParams = `symbol=${symbol}`;
-  const signed = signedQuery(queryParams);
-  return api.get(`/api/v3/openOrders?${signed}`).set(headers);
+function fetchTradeHistory(symbol) {
+  return requestWithSignature('get', '/api/v3/myTrades', `symbol=${symbol}`);
 }
 
-async function fetchTradeHistory(symbol) {
-  const queryParams = `symbol=${symbol}`;
-  const signed = signedQuery(queryParams);
-  return api.get(`/api/v3/myTrades?${signed}`).set(headers);
-}
-
-async function fetchOpenOrdersAll() {
-  const queryParams = ''; // no symbol param
-  const signed = signedQuery(queryParams);
-  return api.get(`/api/v3/openOrders?${signed}`).set(headers);
-}
-
-async function fetchTradeHistoryWithSymbol(symbol) {
-  const queryParams = `symbol=${symbol}`;
-  const signed = signedQuery(queryParams);
-  return api.get(`/api/v3/myTrades?${signed}`).set(headers);
-}
-
-async function placeLimitOrderInvalidKey(symbol, quantity, price) {
-  const queryParams = `symbol=${symbol}&side=BUY&type=LIMIT&timeInForce=GTC&quantity=${quantity}&price=${price}`;
-  const signed = signedQuery(queryParams);
-  return api.post(`/api/v3/order?${signed}`).set(invalidHeaders);
+function placeLimitOrderInvalidKey(symbol, quantity, price) {
+  const params = `symbol=${symbol}&side=BUY&type=LIMIT&timeInForce=GTC&quantity=${quantity}&price=${price}`;
+  return requestWithSignature('post', '/api/v3/order', params, true);
 }
 
 module.exports = {
   placeLimitOrder,
   fetchOpenOrders,
-  fetchTradeHistory,
   fetchOpenOrdersAll,
-  fetchTradeHistoryWithSymbol,
-  placeLimitOrderInvalidKey
+  fetchTradeHistory,
+  placeLimitOrderInvalidKey,
 };

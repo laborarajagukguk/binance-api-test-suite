@@ -1,8 +1,5 @@
-const randomstring = require('randomstring');
-const randomNumber = () => Math.floor(Math.random() * 1000000) + 1;
 
-const firstName = randomstring.generate(7);
-const lastName = randomstring.generate(7);
+require('dotenv').config();
 
 const response = {
   ok: 200,
@@ -29,4 +26,9 @@ const codes = {
 module.exports = {
   response,
   codes,
+  apiKey: process.env.API_KEY,
+  apiSecret: process.env.API_SECRET,
+  baseUrl: process.env.BASE_URL,
+  symbol: process.env.SYMBOL,
+  listenKey: process.env.LISTEN_KEY
 };

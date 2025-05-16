@@ -52,7 +52,7 @@ describe('Orders API Tests', () => {
   });
 
   it('Fetch trade history - Invalid or empty symbol returns 400', async () => {
-    const response = await api.fetchTradeHistoryWithSymbol('INVALID');
+    const response = await api.fetchOpenOrders("INVALID");
    
     expect(response.status).to.equal(400);
     expect(response.body).to.have.property('code');

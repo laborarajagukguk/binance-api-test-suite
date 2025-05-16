@@ -1,32 +1,11 @@
-const supertest = require('supertest');
-const crypto = require('crypto');
-require('dotenv').config();
+const { requestWithSignature, requestWithoutKey } = require('../helper/request');
 
-const api = supertest(process.env.BASE_URL_API);
-
-function getSignature(queryString) {
-  return crypto.createHmac('sha256', process.env.API_SECRET)
-    .update(queryString)
-    .digest('hex');
+function fetchAccountBalance() {
+  return requestWithSignature('get', '/api/v3/account');
 }
 
-function signedQuery(queryParams = '') {
-  const timestamp = Date.now();
-  const fullQuery = `${queryParams}&timestamp=${timestamp}`;
-  const signature = getSignature(fullQuery);
-  return `${fullQuery}&signature=${signature}`;
-}
-
-const headers = { 'X-MBX-APIKEY': process.env.API_KEY };
-
-async function fetchAccountBalance() {
-  const signed = signedQuery('');
-  return api.get(`/api/v3/account?${signed}`).set(headers);
-}
-
-async function fetchAccountBalanceUnauthorized() {
-  const signed = signedQuery('');
-  return api.get(`/api/v3/account?${signed}`); // no headers
+function fetchAccountBalanceUnauthorized() {
+  return requestWithoutKey('get', '/api/v3/account');
 }
 
 module.exports = {

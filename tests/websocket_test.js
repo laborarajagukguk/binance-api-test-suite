@@ -1,56 +1,70 @@
-// require('dotenv').config();
-// const WebSocket = require('ws');
-// const { expect } = require('chai');
+require('dotenv').config();
+const WebSocket = require('ws');
+const { expect } = require('chai');
 
-// describe('WebSocket Tests', () => {
-//   it('Subscribe to Order Book Stream', (done) => {
-//     const symbol = process.env.SYMBOL.toLowerCase();
-//     const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol}@depth`);
+describe('WebSocket Tests', () => {
+  it('Subscribe to Order Book Stream', (done) => {
+    const symbol = process.env.SYMBOL.toLowerCase();
+    const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol}@depth`);
 
-//     ws.on('open', () => {
-//       console.log('Connected to Order Book stream');
-//     });
+    let doneCalled = false;
 
-//     ws.on('message', (data) => {
-//       const msg = JSON.parse(data);
-//       expect(msg).to.have.property('bids');
-//       expect(msg).to.have.property('asks');
-//       ws.close();
-//       done();
-//     });
+    ws.on('open', () => {
+      console.log('Connected to Order Book stream');
+    });
 
-//     ws.on('error', (err) => done(err));
-//   });
+    ws.on('message', (data) => {
+      if (doneCalled) return;
+      try {
+        const msg = JSON.parse(data);
+        expect(msg).to.have.property('b');
+        expect(msg).to.have.property('a');
+        expect(msg.b).to.be.an('array');
+        expect(msg.a).to.be.an('array');
+        doneCalled = true;
+        done();
+        ws.close();
+      } catch (err) {
+        doneCalled = true;
+        done(err);
+        ws.close();
+      }
+    });
 
-//   it('Subscribe to Trade Stream', (done) => {
-//     const symbol = process.env.SYMBOL.toLowerCase();
-//     const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol}@trade`);
+    ws.on('error', (err) => {
+      if (doneCalled) return;
+      doneCalled = true;
+      done(err);
+    });
+  });
 
-//     ws.on('message', (data) => {
-//       const msg = JSON.parse(data);
-//       expect(msg).to.have.property('p'); // price
-//       expect(msg).to.have.property('q'); // quantity
-//       ws.close();
-//       done();
-//     });
+  it('Subscribe to Trade Stream', (done) => {
+    const symbol = process.env.SYMBOL.toLowerCase();
+    const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol}@trade`);
 
-//     ws.on('error', (err) => done(err));
-//   });
+    let doneCalled = false;
 
-//   it('Subscribe to User Data Stream', (done) => {
-//     const listenKey = process.env.LISTEN_KEY;
-//     if (!listenKey) return done(new Error('LISTEN_KEY is not set in environment variables'));
+    ws.on('message', (data) => {
+      if (doneCalled) return;
+      try {
+        const msg = JSON.parse(data);
+        expect(msg).to.have.property('p'); // price
+        expect(msg).to.have.property('q'); // quantity
+        doneCalled = true;
+        done();
+        ws.close();
+      } catch (err) {
+        doneCalled = true;
+        done(err);
+        ws.close();
+      }
+    });
 
-//     const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${listenKey}`);
+    ws.on('error', (err) => {
+      if (doneCalled) return;
+      doneCalled = true;
+      done(err);
+    });
+  });
 
-//     ws.on('message', (data) => {
-//       const msg = JSON.parse(data);
-//       expect(msg).to.be.an('object');
-//       expect(msg).to.have.property('e'); // event type
-//       ws.close();
-//       done();
-//     });
-
-//     ws.on('error', (err) => done(err));
-//   });
-// });
+});
