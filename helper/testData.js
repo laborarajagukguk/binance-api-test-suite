@@ -1,10 +1,6 @@
 /* eslint no-unused-vars: off */
 /* eslint prefer-const: off */
 
-// Store created petId for all tests
-let createdPetId = null;
-
-let createdOrderId = null;
 
 let addActivityLog = ({
   source: '',
@@ -16,7 +12,5 @@ let addActivityLog = ({
 });
 
 module.exports = {
-  createdPetId,
   addActivityLog,
-  createdOrderId,
 };

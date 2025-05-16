@@ -18,6 +18,7 @@ function signedQuery(queryParams = '') {
 }
 
 const headers = { 'X-MBX-APIKEY': process.env.API_KEY };
+const invalidHeaders = { 'X-MBX-APIKEY': 'INVALID_API_KEY' };
 
 async function placeLimitOrder(symbol, quantity, price) {
   const queryParams = `symbol=${symbol}&side=BUY&type=LIMIT&timeInForce=GTC&quantity=${quantity}&price=${price}`;
@@ -37,8 +38,29 @@ async function fetchTradeHistory(symbol) {
   return api.get(`/api/v3/myTrades?${signed}`).set(headers);
 }
 
+async function fetchOpenOrdersAll() {
+  const queryParams = ''; // no symbol param
+  const signed = signedQuery(queryParams);
+  return api.get(`/api/v3/openOrders?${signed}`).set(headers);
+}
+
+async function fetchTradeHistoryWithSymbol(symbol) {
+  const queryParams = `symbol=${symbol}`;
+  const signed = signedQuery(queryParams);
+  return api.get(`/api/v3/myTrades?${signed}`).set(headers);
+}
+
+async function placeLimitOrderInvalidKey(symbol, quantity, price) {
+  const queryParams = `symbol=${symbol}&side=BUY&type=LIMIT&timeInForce=GTC&quantity=${quantity}&price=${price}`;
+  const signed = signedQuery(queryParams);
+  return api.post(`/api/v3/order?${signed}`).set(invalidHeaders);
+}
+
 module.exports = {
   placeLimitOrder,
   fetchOpenOrders,
   fetchTradeHistory,
+  fetchOpenOrdersAll,
+  fetchTradeHistoryWithSymbol,
+  placeLimitOrderInvalidKey
 };

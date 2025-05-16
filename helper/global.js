@@ -25,50 +25,8 @@ const codes = {
   forbidden: 'Forbidden', // 403
 };
 
-// petData with random ID each run
-const petData = {
-  id: randomNumber(),
-  name: 'Fluffy',
-  status: 'available'
-};
-
-const orderData = {
-  petId: 12345,
-  quantity: 1,
-  shipDate: new Date().toISOString(),
-  status: 'placed',
-  complete: true,
-};
-
-const updatedPet = { 
-  ...petData,
-  name: 'Fluffy', 
-  status: 'available' };
-
-const nonExistentPet = { 
-  ...petData,
-  id: 99999999,
-  name: 'Fluffy', 
-  status: 'available' };
-
-// petData with Missing required fields
-const invalidPetData = {
-  name: 'Fluffy',
-}
-
-const fakePetId = 99999999; // A pet ID that should not exist
-
-const validOrderId = 10;
-
 
 module.exports = {
   response,
   codes,
-  petData,
-  orderData,
-  updatedPet,
-  invalidPetData,
-  fakePetId,
-  nonExistentPet,
-  validOrderId
 };
