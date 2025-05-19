@@ -1,7 +1,6 @@
 const { expect } = require('chai');
+const chai = require('chai');
+const chaiJsonSchema = require('chai-json-schema');
 
-before(async () => {
-  });
-
-after(async () => {
-});
+chai.use(chaiJsonSchema);
+global.expect = chai.expect;

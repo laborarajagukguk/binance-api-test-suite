@@ -7,6 +7,7 @@
     "test": "tests"
   },
   "dependencies": {
+    "ajv": "^8.17.1",
     "bluebird": "^3.5.4",
     "chai": "^4.2.0",
     "dotenv": "^7.0.0",
@@ -15,15 +16,16 @@
     "ws": "^8.18.2"
   },
   "devDependencies": {
+    "chai-json-schema": "^1.5.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
     "mocha": "^6.1.2",
     "mochawesome": "^3.1.1"
   },
-  "scripts": {
-    "test": "./node_modules/mocha/bin/mocha ./tests --recursive --reporter mochawesome --reporter-options reportDir=reports/mochawesome/ --timeout 30000"
-  },
+"scripts": {
+  "test": "mocha --require dotenv/config --require tests/setup.js \"tests/**/*_test.js\" --recursive --reporter mochawesome --reporter-options reportDir=reports/mochawesome/ --timeout 30000"
+},
   "author": "",
   "license": "ISC"
 }

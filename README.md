@@ -19,6 +19,8 @@ $ cp env.sample .env
 **6.** Install all dependencies:
 ```sh
 $ npm install
+$ npm install ws
+$ npm install chai-json-schema --save-dev
 ```
 
 **7.** Run Mocha API test:
