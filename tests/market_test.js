@@ -4,6 +4,7 @@ const api = require('../page-objects/market_api.js');
 const cases = require('../test-cases/market_cases.js');
 const { logResponse } = require('../helper/logger.js');
 const orderBookSchema = require('./schemas/orderBook.schema');
+require('./setup');
 
 describe('Market API Tests', () => {
   it(`${cases.scenario.fetchOrderBook.desc}`, async () => {

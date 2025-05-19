@@ -23,7 +23,15 @@ $ npm install ws
 $ npm install chai-json-schema --save-dev
 ```
 
-**7.** Run Mocha API test:
+**7.** Run File Mocha API test:
+```sh
+$ npx mocha tests/orders_test.js
+$ npx mocha tests/account_test.js
+$ npx mocha tests/market_test.js
+```
+
+**8.** Run All Mocha API test:
 ```sh
 $ npm test
 ```
+

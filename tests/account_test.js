@@ -4,6 +4,7 @@ const api = require('../page-objects/account_api.js');
 const cases = require('../test-cases/account_cases.js');
 const { logResponse } = require('../helper/logger.js');
 const accountSchema = require('./schemas/account.schema');
+require('./setup');
 
 describe('Account API Tests', () => {
   it(`${cases.scenario.fetchAccountBalance.desc}`, async () => {
