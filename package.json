@@ -8,8 +8,10 @@
   },
   "dependencies": {
     "ajv": "^8.17.1",
+    "axios": "^1.9.0",
     "bluebird": "^3.5.4",
     "chai": "^4.2.0",
+    "crypto": "^1.0.1",
     "dotenv": "^7.0.0",
     "randomstring": "^1.1.5",
     "supertest": "^4.0.2",
@@ -23,9 +25,9 @@
     "mocha": "^6.1.2",
     "mochawesome": "^3.1.1"
   },
-"scripts": {
-  "test": "mocha --require dotenv/config --require tests/setup.js \"tests/**/*_test.js\" --recursive --reporter mochawesome --reporter-options reportDir=reports/mochawesome/ --timeout 30000"
-},
+  "scripts": {
+    "test": "mocha --require dotenv/config --require tests/setup.js \"tests/**/*_test.js\" --recursive --reporter mochawesome --reporter-options reportDir=reports/mochawesome/ --timeout 30000"
+  },
   "author": "",
   "license": "ISC"
 }
